@@ -19,7 +19,7 @@
   - [Merlin](https://github.com/CSTR-Edinburgh/merlin)  
   - [Ossian](https://github.com/CSTR-Edinburgh/Ossian#notification-settings)  
     Com as ferramentas acima, o grupo espera que seja possível concluir o projeto com um resultado satisfatório, visto que a junção dessas ferramentas deve contribuir para um aplicativo com as funções esperadas.  
-    ### Andamento  
+### Andamento  
     - [X] Definir tema do projeto  
     - [X] Definir público alvo
     - [X] Definir ferramentas OCR  
