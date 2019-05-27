@@ -17,15 +17,14 @@ def image_treatment(image):
     :param: image
     :return:
     '''
-    _, treated_image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
+    _, treated_image = cv2.threshold(image, 140, 255, cv2.THRESH_BINARY)
 
     return treated_image
 
 
 def main():
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe"
     args = argparser()
-
-    cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 
     # read a image, flag 0 is a gray scale image
     img = cv2.imread("./{}".format(args["image"]), 0)
