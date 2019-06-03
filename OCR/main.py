@@ -23,7 +23,6 @@ def image_treatment(image):
 
 
 def main():
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe"
     args = argparser()
 
     # read a image, flag 0 is a gray scale image
@@ -31,7 +30,7 @@ def main():
 
     treated_image = image_treatment(img)
 
-    cv2.imshow("Image", treated_image)
+    #cv2.imshow("Image", img)
 
     print(pytesseract.image_to_string(treated_image))
 
