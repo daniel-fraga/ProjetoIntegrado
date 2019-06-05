@@ -1,64 +1,60 @@
-#https://www.geeksforgeeks.org/socket-programming-multi-threading-python/
-# BIBLIOTECAS
-import random
-import socket, select
-import threading 
+import socket
+import threading
 from _thread import *
-from time import gmtime, strftime
-from random import randint
-
+import cv2
+import base64
 
 #informacoes importantes
-BUFF = 1024
-HOST = '' 
-PORT = 5002 	
-
-print_lock = threading.Lock() 
-
-# funcao thread 
-def threaded(c): 
-	while True: 
-
-		# recebido do cliente
-		data = c.recv(BUFF) 
-		if not data: 
-			print('Bye') 
-			
-			# aberto na saida 
-			print_lock.release() 
-			break
-
-		# envia pro cliente
-		c.send(data) 
-
-	# fecha conx
-	c.close() 
+BUFF = 53136
+HOST = ''
+PORT = 5002
+view = memoryview(bytearray(53136))
+print_lock = threading.Lock()
 
 
-def Main(): 
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-	s.bind((HOST, PORT)) 
-	print("socket binded to post", PORT) 
+def threaded(c):
+    while True:
+        data = c.recv_into(view, BUFF)
 
-	# socket escuando
-	s.listen(5) 
-	print("socket is listening") 
+        fh = open("image.jpeg", "wb")
+        fh.write(base64.b64decode(view))
+        fh.close()
+        print(len(view))
+        mat = cv2.imread("image.jpeg")
 
-	# loppzao 
-	while True: 
+        if not data:
+            print('Bye')
 
-		# aceita a conexao 
-		c, addr = s.accept() 
+            print_lock.release()
+            break
+        cv2.imshow("Tsete", mat)
+        cv2.waitKey(0)
 
-		# cliente no loop lock.acquire
-		print_lock.acquire() 
-		print('Connected to :', addr[0], ':', addr[1]) 
-
-		# nova thread 
-		start_new_thread(threaded, (c,)) 
-	s.close() 
+    c.close()
 
 
-if __name__ == '__main__': 
-	Main() 
+def main():
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((HOST, PORT))
+        print("socket binded to post", PORT)
 
+        # socket escuando
+        s.listen(5)
+        print("socket is listening")
+
+        # loppzao
+        while True:
+
+                # aceita a conexao
+                c, addr = s.accept()
+
+                # cliente no loop lock.acquire
+                print_lock.acquire()
+                print('Connected to :', addr[0], ':', addr[1])
+
+                # nova thread
+                start_new_thread(threaded, (c,))
+
+
+if __name__ == '__main__':
+        main()
