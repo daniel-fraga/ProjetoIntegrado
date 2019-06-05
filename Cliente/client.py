@@ -12,7 +12,6 @@ def main():
         print(len(str))
         sock.connect((HOST, PORT))
         flag = sock.sendall(str)
-
         if flag == None:
             print("Sucess")
     except:

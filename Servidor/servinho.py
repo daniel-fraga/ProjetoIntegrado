@@ -5,10 +5,10 @@ import cv2
 import base64
 
 #informacoes importantes
-BUFF = 53136
+BUFF = 9999999
 HOST = ''
 PORT = 5002
-view = memoryview(bytearray(53136))
+view = memoryview(bytearray(BUFF))
 print_lock = threading.Lock()
 
 
@@ -27,7 +27,6 @@ def threaded(c):
 
             print_lock.release()
             break
-        cv2.imshow("Tsete", mat)
         cv2.waitKey(0)
 
     c.close()
@@ -57,4 +56,4 @@ def main():
 
 
 if __name__ == '__main__':
-        main()
+	main()

@@ -6,7 +6,7 @@ import argparse
 
 def argparser():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", required=True, type=str,
+    ap.add_argument("-i", "--image", type=str,
                     help="path to input image file")
     return vars(ap.parse_args())
 
@@ -24,10 +24,12 @@ def image_treatment(image):
 
 def main():
     args = argparser()
-
-    # read a image, flag 0 is a gray scale image
-    img = cv2.imread("./{}".format(args["image"]), 0)
-
+    
+    if args["image"]:
+        # read a image, flag 0 is a gray scale image
+        img = cv2.imread("./{}".format(args["image"]), 0)
+    else:
+        img = cv2.imread("../Servidor/image.jpeg", 0)
     treated_image = image_treatment(img)
 
     #cv2.imshow("Image", img)
